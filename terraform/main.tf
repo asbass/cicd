@@ -243,18 +243,71 @@ resource "aws_iam_role_policy_attachment" "jenkins_ecr_access" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryPowerUser"
   role       = aws_iam_role.jenkins_role.name
 }
+resource "aws_iam_role" "build_role" {
+  name = "DE00175-eks-build-role"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Action = "sts:AssumeRole"
+      Effect = "Allow"
+      Principal = {
+        Service = "ec2.amazonaws.com" # Hoặc service nào Jenkins đang dùng
+      }
+    }]
+  })
+}
+
+
+# 2. Tạo Policy cho phép DescribeCluster
+resource "aws_iam_policy" "eks_describe_policy" {
+  name        = "EKSDescribePolicy"
+  description = "Cho phép Jenkins role describe cluster"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Effect   = "Allow"
+      Action   = ["eks:DescribeCluster"]
+      Resource = "*"
+    }]
+  })
+}
+
+# 3. Gắn Policy này vào Role
+resource "aws_iam_role_policy_attachment" "attach_describe_policy" {
+  role       = aws_iam_role.build_role.name
+  policy_arn = aws_iam_policy.eks_describe_policy.arn
+}
 # 1. Tạo Access Entry cho jenkins_role (Role chuyên dụng của Jenkins)
-resource "aws_eks_access_entry" "jenkins_role_access" {
-  cluster_name      = aws_eks_cluster.eks_cluster.name
-  principal_arn     = aws_iam_role.jenkins_role.arn
+#resource "aws_eks_access_entry" "jenkins_role_access" {
+#  cluster_name      = aws_eks_cluster.eks_cluster.name
+#  principal_arn     = aws_iam_role.jenkins_role.arn
+#  type              = "STANDARD"
+#}
+
+# 2. Gán quyền Cluster Admin cho jenkins_role
+#resource "aws_eks_access_policy_association" "jenkins_admin_access" {
+ # cluster_name  = aws_eks_cluster.eks_cluster.name
+#  policy_arn    = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
+#  principal_arn = aws_iam_role.jenkins_role.arn
+
+ # access_scope {
+  #  type = "cluster"
+ # }
+#}
+# 1. Tạo Access Entry cho build role
+resource "aws_eks_access_entry" "jenkins_build_role_access" {
+  cluster_name      = "DE00175-eks" # Tên cluster của bạn
+  principal_arn     = "arn:aws:iam::891920435433:role/DE00175-eks-build-role"
   type              = "STANDARD"
 }
 
-# 2. Gán quyền Cluster Admin cho jenkins_role
-resource "aws_eks_access_policy_association" "jenkins_admin_access" {
-  cluster_name  = aws_eks_cluster.eks_cluster.name
+# 2. Gán quyền Admin (hoặc quyền đủ để Describe) cho role này
+resource "aws_eks_access_policy_association" "jenkins_build_admin_access" {
+  cluster_name  = "DE00175-eks"
   policy_arn    = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
-  principal_arn = aws_iam_role.jenkins_role.arn
+  principal_arn = "arn:aws:iam::891920435433:role/DE00175-eks-build-role"
 
   access_scope {
     type = "cluster"

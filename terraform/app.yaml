@@ -10,7 +10,7 @@ metadata:
   namespace: app
 type: Opaque
 stringData:
-  DB_HOST: terraform-20260528155106360600000006.chom4aao050k.ap-southeast-1.rds.amazonaws.com
+  DB_HOST: terraform-20260611124246923600000006.chom4aao050k.ap-southeast-1.rds.amazonaws.com
   DB_NAME: gameboard
   DB_USER: admin
   DB_PASSWORD: Tai123456789
@@ -31,6 +31,27 @@ spec:
       containers:
         - name: app
           image: REPLACE_WITH_ECR_URI:latest
+          env:
+            - name: DB_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: app-db
+                  key: DB_HOST
+            - name: DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: app-db
+                  key: DB_NAME
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: app-db
+                  key: DB_USER
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: app-db
+                  key: DB_PASSWORD
           ports:
             - containerPort: 5000
           envFrom:

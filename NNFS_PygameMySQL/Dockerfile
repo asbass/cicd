@@ -3,8 +3,8 @@ FROM python:3.12-slim
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
-WORKDIR /app
 
+COPY global-bundle.pem /app/global-bundle.pem
 # install dependencies
 RUN apt-get update && apt-get install -y \
     gcc \
@@ -25,4 +25,4 @@ COPY . .
 EXPOSE 5000
 
 # run flask app
-CMD ["python", "app.py"]
+CMD ["python", "NNFS.py"]
