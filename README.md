@@ -7,19 +7,23 @@
 ![Jenkins](https://img.shields.io/badge/Jenkins-CI%2FCD-D24939)
 ![Trivy](https://img.shields.io/badge/Trivy-Security-1904DA)
 
-## Overview
+---
 
-This project demonstrates a complete cloud-native DevOps workflow on AWS.
+# Overview
 
-The infrastructure is provisioned using Terraform, applications are containerized with Docker, CI/CD is automated through Jenkins, container images are stored in Amazon ECR, and workloads are deployed to Amazon EKS. The deployment pipeline also integrates Trivy for container image vulnerability scanning and performs Kubernetes rollout verification before completing deployment.
+This project demonstrates an end-to-end cloud-native DevOps workflow on AWS. The infrastructure is provisioned using Terraform, container images are built with Docker, security scanning is performed using Trivy, and the application is deployed to Amazon EKS through a Jenkins CI/CD pipeline.
+
+The project follows Infrastructure as Code (IaC) principles and automates the complete deployment lifecycle, from code commit to Kubernetes deployment.
 
 ---
 
 # Project Architecture
 
-> 📷 **TODO:** Add AWS Architecture Diagram here.
+> 📷 **TODO**
+>
+> Draw the architecture using **draw.io** or **diagrams.net**.
 
-Example:
+Example
 
 ```
 Developer
@@ -33,7 +37,7 @@ Developer
  Jenkins Pipeline
      │
  ├── Build Docker Image
- ├── Trivy Scan
+ ├── Trivy Security Scan
  ├── Push Amazon ECR
  └── Deploy Amazon EKS
               │
@@ -50,35 +54,37 @@ Developer
 
 # CI/CD Workflow
 
-> 📷 **TODO:** Add Jenkins Pipeline Workflow Diagram here.
+> 📷 **TODO**
+>
+> Draw the CI/CD workflow using **draw.io**.
 
 ```
 Git Push
-    │
-    ▼
-GitHub
-    │
+      │
+      ▼
+GitHub Repository
+      │
 Webhook
-    │
-    ▼
+      │
+      ▼
 Jenkins Pipeline
-    │
-    ▼
+      │
+      ▼
 Build Docker Image
-    │
-    ▼
+      │
+      ▼
 Trivy Security Scan
-    │
-    ▼
-Push Image to Amazon ECR
-    │
-    ▼
+      │
+      ▼
+Push Docker Image to Amazon ECR
+      │
+      ▼
 Deploy to Amazon EKS
-    │
-    ▼
+      │
+      ▼
 Verify Kubernetes Rollout
-    │
-    ▼
+      │
+      ▼
 Application Running
 ```
 
@@ -89,21 +95,21 @@ Application Running
 | Category | Technology |
 |------------|------------|
 | Cloud | AWS |
-| IaC | Terraform |
+| Infrastructure as Code | Terraform |
 | Container | Docker |
 | CI/CD | Jenkins |
 | Registry | Amazon ECR |
-| Orchestration | Amazon EKS |
+| Container Orchestration | Amazon EKS |
 | Security | Trivy |
 | Networking | NGINX Ingress |
 | Database | Amazon RDS |
-| OS | Ubuntu Linux |
+| Operating System | Ubuntu Linux |
 
 ---
 
 # Infrastructure Provisioning
 
-Terraform provisions the following resources:
+Terraform provisions the following AWS resources:
 
 - VPC
 - Public Subnets
@@ -115,7 +121,7 @@ Terraform provisions the following resources:
 - Amazon EKS
 - Amazon ECR
 - Amazon RDS
-- EC2 (Jenkins)
+- EC2 (Jenkins Server)
 
 ---
 
@@ -126,9 +132,9 @@ The CI/CD pipeline consists of the following stages.
 | Stage | Description |
 |--------|-------------|
 | Build | Build Docker Image |
-| Scan | Trivy Security Scan |
-| Push | Push Docker Image to Amazon ECR |
-| Deploy | Apply Kubernetes Manifest |
+| Scan | Scan Image using Trivy |
+| Push | Push Image to Amazon ECR |
+| Deploy | Deploy Application to Amazon EKS |
 | Verify | Verify Kubernetes Rollout |
 | Cleanup | Remove Local Docker Image |
 
@@ -138,12 +144,12 @@ The CI/CD pipeline consists of the following stages.
 
 Trivy is integrated into the Jenkins Pipeline to improve deployment security.
 
-Features:
+Features
 
 - Scan Docker Images
-- Detect HIGH Vulnerabilities
-- Detect CRITICAL Vulnerabilities
-- Stop deployment if critical vulnerabilities are detected
+- Detect HIGH vulnerabilities
+- Detect CRITICAL vulnerabilities
+- Prevent deployment if critical vulnerabilities are detected
 
 ---
 
@@ -151,7 +157,7 @@ Features:
 
 The application is deployed to Amazon EKS using Kubernetes manifests.
 
-Resources:
+Resources
 
 - Namespace
 - Secret
@@ -173,31 +179,29 @@ Health Checks
 
 # Repository Structure
 
-```
+```text
 .
 ├── Dockerfile
 ├── Jenkinsfile
+├── terraform/
 ├── k8s/
 │   └── app.yaml
-├── terraform/
 ├── templates/
 ├── requirements.txt
 ├── README.md
-└── Images/
+└── images/
 ```
-
-> ⚠️ **TODO:** Update this structure if you rename folders (recommended).
 
 ---
 
 # Project Outcome
 
-- Successfully provisioned AWS infrastructure using Terraform.
-- Built and deployed a containerized Python application on Amazon EKS.
-- Automated CI/CD using Jenkins.
+- Provisioned AWS infrastructure using Terraform.
+- Automated Docker image build and deployment.
 - Integrated Trivy image vulnerability scanning.
+- Deployed containerized applications to Amazon EKS.
 - Implemented Kubernetes rollout verification.
-- Published Infrastructure as Code and deployment workflow on GitHub.
+- Managed infrastructure using Infrastructure as Code (Terraform).
 
 ---
 
@@ -214,29 +218,37 @@ Health Checks
 
 ---
 
-# Screenshots
+# Project Visuals
 
-## Jenkins Pipeline
+## 1. Architecture Diagram
 
-> 📷 **TODO:** Add successful Jenkins Pipeline screenshot.
-
----
-
-## Trivy Scan Result
-
-> 📷 **TODO:** Add Trivy Scan screenshot.
+> 📷 **TODO**
+>
+> Draw the AWS Architecture using **draw.io**.
 
 ---
 
-## Amazon EKS Pods
+## 2. CI/CD Pipeline Workflow
 
-> 📷 **TODO:** Add kubectl get pods screenshot.
+> 📷 **TODO**
+>
+> Draw the Jenkins Pipeline Workflow using **draw.io**.
 
 ---
 
-## Application
+## 3. Jenkins Pipeline
 
-> 📷 **TODO:** Add application running screenshot.
+> 📷 **TODO**
+>
+> Open **Jenkinsfile** in VS Code and take a screenshot.
+
+---
+
+## 4. Kubernetes Deployment
+
+> 📷 **TODO**
+>
+> Open **k8s/app.yaml** in VS Code and take a screenshot.
 
 ---
 
@@ -262,5 +274,5 @@ Health Checks
 - Amazon EKS
 - Amazon ECR
 - Trivy Security Scanning
-- Rollout Verification
+- Kubernetes Rollout Verification
 - Git & GitHub
