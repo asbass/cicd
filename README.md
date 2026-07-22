@@ -19,35 +19,7 @@ The project follows Infrastructure as Code (IaC) principles and automates the co
 
 # Project Architecture
 
-> 📷 **TODO**
->
-> Draw the architecture using **draw.io** or **diagrams.net**.
-
-Example
-
-```
-Developer
-     │
- Git Push
-     │
- GitHub Repository
-     │
- Webhook
-     │
- Jenkins Pipeline
-     │
- ├── Build Docker Image
- ├── Trivy Security Scan
- ├── Push Amazon ECR
- └── Deploy Amazon EKS
-              │
-        NGINX Ingress
-              │
-      Kubernetes Service
-              │
-        Application Pods
-              │
-          Amazon RDS
+![Architecture](images/architecture.png)
 ```
 
 ---
