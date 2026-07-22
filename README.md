@@ -18,7 +18,7 @@ The project follows Infrastructure as Code (IaC) principles and automates the co
 ---
 
 # Project Architecture
-![Architecture]
+![Architecture](images/architecture.png)
 # CI/CD Workflow
 ![CI/CD](images/cicd-workflow.png)
 
