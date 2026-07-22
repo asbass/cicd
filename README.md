@@ -8,7 +8,21 @@
 ![Trivy](https://img.shields.io/badge/Trivy-Security-1904DA)
 
 ---
+## Table of Contents
 
+- [Overview](#overview)
+- [Project Architecture](#project-architecture)
+- [CI/CD Workflow](#cicd-workflow)
+- [Technology Stack](#technology-stack)
+- [Infrastructure Provisioning](#infrastructure-provisioning)
+- [Jenkins Pipeline](#jenkins-pipeline)
+- [Trivy Security Scan](#trivy-security-scan)
+- [Kubernetes Deployment](#kubernetes-deployment)
+- [Repository Structure](#repository-structure)
+- [Project Outcome](#project-outcome)
+- [Project Metrics](#project-metrics)
+- [Future Improvements](#future-improvements)
+- [Skills Demonstrated](#skills-demonstrated)
 # Overview
 
 This project demonstrates an end-to-end cloud-native DevOps workflow on AWS. The infrastructure is provisioned using Terraform, container images are built with Docker, security scanning is performed using Trivy, and the application is deployed to Amazon EKS through a Jenkins CI/CD pipeline.
@@ -16,7 +30,15 @@ This project demonstrates an end-to-end cloud-native DevOps workflow on AWS. The
 The project follows Infrastructure as Code (IaC) principles and automates the complete deployment lifecycle, from code commit to Kubernetes deployment.
 
 ---
+# Key Features
 
+- Provision AWS infrastructure using Terraform.
+- Automate CI/CD using Jenkins.
+- Build and package applications with Docker.
+- Scan container images using Trivy.
+- Store images in Amazon ECR.
+- Deploy applications to Amazon EKS.
+- Verify Kubernetes rollout after deployment.
 # Project Architecture
 ![Architecture](images/architecture.png)
 # CI/CD Workflow
@@ -127,13 +149,12 @@ Health Checks
 ---
 
 # Project Outcome
-
 - Provisioned AWS infrastructure using Terraform.
-- Automated Docker image build and deployment.
+- Built a secure CI/CD pipeline using Jenkins.
 - Integrated Trivy image vulnerability scanning.
-- Deployed containerized applications to Amazon EKS.
+- Automated container deployment to Amazon EKS.
 - Implemented Kubernetes rollout verification.
-- Managed infrastructure using Infrastructure as Code (Terraform).
+- Published Infrastructure as Code (IaC) and deployment workflow on GitHub.
 
 ---
 
@@ -149,16 +170,6 @@ Health Checks
 | Deployment Platform | Amazon EKS |
 
 ---
-
-# Project Visuals
-
-## 1. Architecture Diagram
-![Architecture](images/architecture.png)
-
-
-## 2. CI/CD Pipeline Workflow
-![CI/CD](images/cicd-workflow.png)
-
 # Future Improvements
 
 - GitOps with ArgoCD
@@ -170,16 +181,13 @@ Health Checks
 - Slack / Telegram Notification
 
 ---
-
 # Skills Demonstrated
 
 - Infrastructure as Code (Terraform)
-- AWS Cloud Infrastructure
+- AWS Cloud (EKS, ECR, EC2, RDS)
 - Docker Containerization
 - Jenkins CI/CD
 - Kubernetes Deployment
-- Amazon EKS
-- Amazon ECR
-- Trivy Security Scanning
-- Kubernetes Rollout Verification
+- Trivy Container Security
 - Git & GitHub
+- Linux Administration
