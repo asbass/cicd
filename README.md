@@ -1,16 +1,64 @@
 # Cloud Native CI/CD Pipeline on AWS EKS
 
-An end-to-end DevOps project demonstrating how to provision AWS infrastructure, build and deploy containerized applications, and automate CI/CD using Terraform, Jenkins, Docker and Kubernetes on Amazon EKS.
+![AWS](https://img.shields.io/badge/AWS-EKS-orange)
+![Terraform](https://img.shields.io/badge/Terraform-IaC-623CE4)
+![Docker](https://img.shields.io/badge/Docker-Container-2496ED)
+![Kubernetes](https://img.shields.io/badge/Kubernetes-EKS-326CE5)
+![Jenkins](https://img.shields.io/badge/Jenkins-CI%2FCD-D24939)
+![Trivy](https://img.shields.io/badge/Trivy-Security-1904DA)
+
+## Overview
+
+This project demonstrates a complete cloud-native DevOps workflow on AWS.
+
+The infrastructure is provisioned using Terraform, applications are containerized with Docker, CI/CD is automated through Jenkins, container images are stored in Amazon ECR, and workloads are deployed to Amazon EKS. The deployment pipeline also integrates Trivy for container image vulnerability scanning and performs Kubernetes rollout verification before completing deployment.
 
 ---
 
-# Architecture
+# Project Architecture
 
-```text
+> 📷 **TODO:** Add AWS Architecture Diagram here.
+
+Example:
+
+```
 Developer
+     │
+ Git Push
+     │
+ GitHub Repository
+     │
+ Webhook
+     │
+ Jenkins Pipeline
+     │
+ ├── Build Docker Image
+ ├── Trivy Scan
+ ├── Push Amazon ECR
+ └── Deploy Amazon EKS
+              │
+        NGINX Ingress
+              │
+      Kubernetes Service
+              │
+        Application Pods
+              │
+          Amazon RDS
+```
+
+---
+
+# CI/CD Workflow
+
+> 📷 **TODO:** Add Jenkins Pipeline Workflow Diagram here.
+
+```
+Git Push
     │
     ▼
 GitHub
+    │
+Webhook
     │
     ▼
 Jenkins Pipeline
@@ -22,72 +70,40 @@ Build Docker Image
 Trivy Security Scan
     │
     ▼
-Push Amazon ECR
+Push Image to Amazon ECR
     │
     ▼
-Deploy Amazon EKS
+Deploy to Amazon EKS
     │
     ▼
-Verify Rollout
+Verify Kubernetes Rollout
+    │
+    ▼
+Application Running
 ```
 
 ---
 
-# Tech Stack
+# Technology Stack
 
-## Cloud
-
-- Amazon Web Services (AWS)
-- Amazon EKS
-- Amazon EC2
-- Amazon ECR
-- Amazon RDS
-- IAM
-- VPC
-
-## DevOps
-
-- Terraform
-- Jenkins
-- Docker
-- Kubernetes
-- Git
-- GitHub
-
-## Security
-
-- Trivy
-
-## Application
-
-- Python
-- Flask
-- MySQL
+| Category | Technology |
+|------------|------------|
+| Cloud | AWS |
+| IaC | Terraform |
+| Container | Docker |
+| CI/CD | Jenkins |
+| Registry | Amazon ECR |
+| Orchestration | Amazon EKS |
+| Security | Trivy |
+| Networking | NGINX Ingress |
+| Database | Amazon RDS |
+| OS | Ubuntu Linux |
 
 ---
 
-# Project Features
+# Infrastructure Provisioning
 
-- Infrastructure provisioning with Terraform
-- Docker containerization
-- Jenkins CI/CD Pipeline
-- Trivy container image vulnerability scanning
-- Amazon ECR image management
-- Amazon EKS deployment
-- Kubernetes Deployment
-- Kubernetes Service
-- Kubernetes Secret
-- Kubernetes Ingress
-- Readiness Probe
-- Liveness Probe
-- Automatic Rollout Verification
-- Amazon RDS database integration
-
----
-
-# Infrastructure
-
-Terraform provisions the following AWS resources:
+Terraform provisions the following resources:
 
 - VPC
 - Public Subnets
@@ -96,16 +112,46 @@ Terraform provisions the following AWS resources:
 - Route Tables
 - Security Groups
 - IAM Roles
-- Amazon EC2
-- Amazon EKS Cluster
-- Amazon ECR Repository
-- Amazon RDS MySQL
+- Amazon EKS
+- Amazon ECR
+- Amazon RDS
+- EC2 (Jenkins)
 
 ---
 
-# Kubernetes Resources
+# Jenkins Pipeline
 
-The application is deployed using:
+The CI/CD pipeline consists of the following stages.
+
+| Stage | Description |
+|--------|-------------|
+| Build | Build Docker Image |
+| Scan | Trivy Security Scan |
+| Push | Push Docker Image to Amazon ECR |
+| Deploy | Apply Kubernetes Manifest |
+| Verify | Verify Kubernetes Rollout |
+| Cleanup | Remove Local Docker Image |
+
+---
+
+# Trivy Security Scan
+
+Trivy is integrated into the Jenkins Pipeline to improve deployment security.
+
+Features:
+
+- Scan Docker Images
+- Detect HIGH Vulnerabilities
+- Detect CRITICAL Vulnerabilities
+- Stop deployment if critical vulnerabilities are detected
+
+---
+
+# Kubernetes Deployment
+
+The application is deployed to Amazon EKS using Kubernetes manifests.
+
+Resources:
 
 - Namespace
 - Secret
@@ -113,107 +159,15 @@ The application is deployed using:
 - Service
 - Ingress
 
-Application health is monitored through:
+Deployment Strategy
+
+- Rolling Update
+- Rollout Verification
+
+Health Checks
 
 - Readiness Probe
 - Liveness Probe
-
----
-
-# CI/CD Workflow
-
-1. Developer pushes source code to GitHub.
-2. Jenkins automatically starts the pipeline.
-3. Build Docker image.
-4. Scan Docker image using Trivy.
-5. Stop the pipeline if HIGH or CRITICAL vulnerabilities are detected.
-6. Push Docker image to Amazon ECR.
-7. Deploy application to Amazon EKS.
-8. Verify Kubernetes rollout status.
-
----
-
-# Jenkins Pipeline
-
-Pipeline stages:
-
-- Build Docker Image
-- Trivy Security Scan
-- Push Docker Image to Amazon ECR
-- Deploy to Amazon EKS
-- Verify Kubernetes Rollout
-
----
-
-# Trivy Security Scan
-
-The Jenkins Pipeline integrates Trivy to improve container security.
-
-Features:
-
-- Scan Docker images before deployment
-- Detect HIGH and CRITICAL vulnerabilities
-- Prevent vulnerable images from being deployed
-- Improve CI/CD security
-
-Example command:
-
-```bash
-trivy image \
-  --severity HIGH,CRITICAL \
-  --exit-code 1 \
-  IMAGE_NAME
-```
-
----
-
-# Deployment Verification
-
-After deployment Jenkins executes:
-
-```bash
-kubectl rollout status deployment/app \
--n app \
---timeout=180s
-```
-
-The deployment is considered successful only after Kubernetes reports a successful rollout.
-
----
-
-# Application Flow
-
-```text
-GitHub
-
-↓
-
-Jenkins
-
-↓
-
-Docker Build
-
-↓
-
-Trivy Scan
-
-↓
-
-Amazon ECR
-
-↓
-
-Amazon EKS
-
-↓
-
-Kubernetes Deployment
-
-↓
-
-Application Running
-```
 
 ---
 
@@ -221,54 +175,92 @@ Application Running
 
 ```
 .
-├── terraform/
-├── jenkins/
-├── docker/
-├── k8s/
-│   ├── app.yaml
-├── app/
-├── Jenkinsfile
 ├── Dockerfile
-└── README.md
+├── Jenkinsfile
+├── k8s/
+│   └── app.yaml
+├── terraform/
+├── templates/
+├── requirements.txt
+├── README.md
+└── Images/
 ```
+
+> ⚠️ **TODO:** Update this structure if you rename folders (recommended).
 
 ---
 
-# Skills Demonstrated
+# Project Outcome
 
-- Linux Administration
-- Git & GitHub
-- Docker
-- Kubernetes
-- Jenkins
-- Terraform
-- AWS Cloud
-- Amazon EKS
-- Amazon ECR
-- Amazon RDS
-- CI/CD
-- Infrastructure as Code
-- Container Security
-- DevSecOps
-- NGINX Ingress
-- Readiness/Liveness Probes
+- Successfully provisioned AWS infrastructure using Terraform.
+- Built and deployed a containerized Python application on Amazon EKS.
+- Automated CI/CD using Jenkins.
+- Integrated Trivy image vulnerability scanning.
+- Implemented Kubernetes rollout verification.
+- Published Infrastructure as Code and deployment workflow on GitHub.
+
+---
+
+# Project Metrics
+
+| Metric | Value |
+|---------|------:|
+| AWS Resources Provisioned | 10+ |
+| Jenkins Pipeline Stages | 6 |
+| Kubernetes Resources | 5 |
+| Container Registry | Amazon ECR |
+| Security Scanner | Trivy |
+| Deployment Platform | Amazon EKS |
+
+---
+
+# Screenshots
+
+## Jenkins Pipeline
+
+> 📷 **TODO:** Add successful Jenkins Pipeline screenshot.
+
+---
+
+## Trivy Scan Result
+
+> 📷 **TODO:** Add Trivy Scan screenshot.
+
+---
+
+## Amazon EKS Pods
+
+> 📷 **TODO:** Add kubectl get pods screenshot.
+
+---
+
+## Application
+
+> 📷 **TODO:** Add application running screenshot.
 
 ---
 
 # Future Improvements
 
-- Helm Charts
-- ArgoCD GitOps
-- Horizontal Pod Autoscaler
+- GitOps with ArgoCD
+- Helm Chart
 - Prometheus Monitoring
 - Grafana Dashboard
-- Slack Notifications
+- Horizontal Pod Autoscaler (HPA)
+- SonarQube Integration
+- Slack / Telegram Notification
 
 ---
 
-# Author
+# Skills Demonstrated
 
-Bui Tan Tai
-
-GitHub:
-https://github.com/asbass/cicd
+- Infrastructure as Code (Terraform)
+- AWS Cloud Infrastructure
+- Docker Containerization
+- Jenkins CI/CD
+- Kubernetes Deployment
+- Amazon EKS
+- Amazon ECR
+- Trivy Security Scanning
+- Rollout Verification
+- Git & GitHub
