@@ -20,42 +20,7 @@ The project follows Infrastructure as Code (IaC) principles and automates the co
 # Project Architecture
 ![Architecture]
 # CI/CD Workflow
-
-> 📷 **TODO**
->
-> Draw the CI/CD workflow using **draw.io**.
-
-```
-Git Push
-      │
-      ▼
-GitHub Repository
-      │
-Webhook
-      │
-      ▼
-Jenkins Pipeline
-      │
-      ▼
-Build Docker Image
-      │
-      ▼
-Trivy Security Scan
-      │
-      ▼
-Push Docker Image to Amazon ECR
-      │
-      ▼
-Deploy to Amazon EKS
-      │
-      ▼
-Verify Kubernetes Rollout
-      │
-      ▼
-Application Running
-```
-
----
+![CI/CD](images/cicd-workflow.png)
 
 # Technology Stack
 
