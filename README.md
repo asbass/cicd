@@ -18,7 +18,6 @@
 - [Jenkins Pipeline](#jenkins-pipeline)
 - [Trivy Security Scan](#trivy-security-scan)
 - [Kubernetes Deployment](#kubernetes-deployment)
-- [Repository Structure](#repository-structure)
 - [Project Outcome](#project-outcome)
 - [Project Metrics](#project-metrics)
 - [Future Improvements](#future-improvements)
@@ -131,22 +130,7 @@ Health Checks
 
 ---
 
-# Repository Structure
 
-```text
-.
-├── Dockerfile
-├── Jenkinsfile
-├── terraform/
-├── k8s/
-│   └── app.yaml
-├── templates/
-├── requirements.txt
-├── README.md
-└── images/
-```
-
----
 
 # Project Outcome
 - Provisioned AWS infrastructure using Terraform.
