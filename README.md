@@ -153,36 +153,11 @@ Health Checks
 # Project Visuals
 
 ## 1. Architecture Diagram
+![Architecture](images/architecture.png)
 
-> 📷 **TODO**
->
-> Draw the AWS Architecture using **draw.io**.
-
----
 
 ## 2. CI/CD Pipeline Workflow
-
-> 📷 **TODO**
->
-> Draw the Jenkins Pipeline Workflow using **draw.io**.
-
----
-
-## 3. Jenkins Pipeline
-
-> 📷 **TODO**
->
-> Open **Jenkinsfile** in VS Code and take a screenshot.
-
----
-
-## 4. Kubernetes Deployment
-
-> 📷 **TODO**
->
-> Open **k8s/app.yaml** in VS Code and take a screenshot.
-
----
+![CI/CD](images/cicd-workflow.png)
 
 # Future Improvements
 
